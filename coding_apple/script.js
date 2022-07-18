@@ -5,28 +5,16 @@ var hat = [];
 var itemList = { 셔츠: shirts, 바지: pants, 양말: socks, 모자: hat };
 let $formSelect = document.querySelector('.form-select');
 let $formSelectDetail = document.querySelectorAll('.form-select')[1];
+let $sort = document.querySelector('.sort-title');
+let cardList = [];
+let $cardBox = document.querySelector('.card-box');
+let $more = document.querySelector('.read-more');
+
 resetOptionList($formSelectDetail, 'form-hide');
 addOptionList($formSelect, Object.keys(itemList));
 addOptionList($formSelectDetail, itemList['셔츠']);
-// $formSelect.addEventListener('input', function () {
-//   if ($formSelect.value == '셔츠') {
-//     resetOptionList($formSelectDetail, 'form-hide');
-//     addOptionList(shirts);
-//   } else if ($formSelect.value == '바지') {
-//     resetOptionList($formSelectDetail, 'form-hide');
-//     addOptionList(pants);
-//   } else if ($formSelect.value == '양말') {
-//     resetOptionList($formSelectDetail, 'form-hide');
-//     let optionListText;
-//     socks.forEach((e) => {
-//       optionListText += `<option>${e}</option>`;
-//     });
-//     $formSelectDetail.insertAdjacentHTML('beforeend', optionListText);
-//   } else {
-//     $formSelectDetail.classList.add('form-hide');
-//   }
-// });
 
+//상품선택하면 상품선택 detail Option 변경
 $formSelect.addEventListener('input', function () {
   resetOptionList($formSelectDetail, 'form-hide');
   if (itemList[$formSelect.value].length) {
@@ -35,10 +23,14 @@ $formSelect.addEventListener('input', function () {
     $formSelectDetail.classList.add('form-hide');
   }
 });
+
+//option목록 reset
 function resetOptionList(dom, removeClassNm) {
-  dom.classList.remove(removeClassNm);
+  removeClassNm ? dom.classList.remove(removeClassNm) : null;
   dom.length = 0;
 }
+
+//option append
 function addOptionList(dom, arr) {
   arr.forEach((e) => {
     let option = document.createElement('option');
@@ -46,39 +38,62 @@ function addOptionList(dom, arr) {
     dom.append(option);
   });
 }
-let cardList = [];
-let $cardBox = document.querySelector('.card-box');
-fetchAndShow('https://codingapple1.github.io/js/more1.json', $cardBox);
 
-let $more = document.querySelector('.show-more');
+fetchAndShowCard('https://codingapple1.github.io/js/more1.json', $cardBox);
 
-$more.addEventListener('click', () =>
-  fetchAndShow('https://codingapple1.github.io/js/more2.json', $cardBox)
-);
+$more.addEventListener('click', function () {
+  fetchAndShowCard('https://codingapple1.github.io/js/more2.json', $cardBox);
+});
 
-function fetchAndShow(url, element) {
+//데이터 가져와서 카드리스트 표출
+function fetchAndShowCard(url, element) {
   fetch(url)
     .then((res) => res.json())
-    .then(function (data) {
+    .then((data) => {
       let cardHtml;
-      console.log(data);
+      //나중에 10개씩 더보기 할수도 있는데 0번 데이터로만 비교하면 안될듯..
+      // if (!JSON.stringify(cardList).includes(JSON.stringify(data[0]))) {
+      //   data.map((newData, i) => {
+      //     cardList.push(newData);
+      //     cardHtml = makeCardHtml(newData);
+      //     drawHtml(element, cardHtml);
+      //   });
+      // } else {
+      //   alert('더보기 끝');
+      // }
+      let readDone = false;
       data.map((newData, i) => {
-        console.log(newData);
         if (!cardList.find((item) => item.id === newData.id)) {
           cardList.push(newData);
-          cardHtml = `<div class="col-sm-4">
-                        <img src="https://via.placeholder.com/600" class="w-100">
-                        <h5>${newData.title}</h5>
-                        <p>가격 : ${newData.price}</p>
-                        </div>
-                        `;
-          element.insertAdjacentHTML('beforeend', cardHtml);
+          cardHtml = makeCardHtml(newData);
+          drawHtml(element, cardHtml);
         } else {
+          //더보기 버튼이 기능 안하도록
+          readDone = true;
           return;
         }
       });
+      if (readDone) {
+        alert('마지막입니다.');
+      }
     })
     .catch(function (error) {
-      console.log('실패함');
+      console.log('실패');
     });
+}
+
+//dom에 html insert
+function drawHtml(dom, html, position) {
+  dom.insertAdjacentHTML(position || 'beforeend', html);
+}
+
+//card만드는 Html 문자열 반환
+function makeCardHtml(obj) {
+  let returnHtml = `<div class="col-sm-4">
+  <img src="https://via.placeholder.com/600" class="w-100">
+  <h5>${obj.title}</h5>
+  <p>가격 : ${obj.price}</p>
+  </div>
+  `;
+  return returnHtml;
 }
