@@ -97,3 +97,15 @@ function makeCardHtml(obj) {
   `;
   return returnHtml;
 }
+
+$sort.addEventListener('click', () => {
+  //이미 정렬이 된 상태면 다시 정렬하지 않음
+  let beforeList = [...cardList];
+  cardList.sort((a, b) => (a.title > b.title ? 1 : b.title > a.title ? -1 : 0));
+  if (JSON.stringify(cardList) != JSON.stringify(beforeList)) {
+    $cardBox.innerHTML = '';
+    let html = '';
+    cardList.map((e) => (html += makeCardHtml(e)));
+    drawHtml($cardBox, html);
+  }
+});
