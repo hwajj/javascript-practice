@@ -10,6 +10,8 @@ let cardList = [];
 let $cardBox = document.querySelector('.card-box');
 let $more = document.querySelector('.read-more');
 
+let localStorage_cart = [];
+
 resetOptionList($formSelectDetail, 'form-hide');
 addOptionList($formSelect, Object.keys(itemList));
 addOptionList($formSelectDetail, itemList['셔츠']);
@@ -89,10 +91,12 @@ function drawHtml(dom, html, position) {
 
 //card만드는 Html 문자열 반환
 function makeCardHtml(obj) {
-  let returnHtml = `<div class="col-sm-4">
+  console.log(obj);
+  let returnHtml = `<div class="col-sm-4" data-item data-item-id=${obj.id}>
   <img src="https://via.placeholder.com/600" class="w-100">
-  <h5>${obj.title}</h5>
-  <p>가격 : ${obj.price}</p>
+    <h5>${obj.title}</h5>
+    <p>가격 : ${obj.price}</p>
+    <button class="btn btn-primary btn-sm buy-btn" data-buy-button>구매</button>
   </div>
   `;
   return returnHtml;
@@ -107,5 +111,17 @@ $sort.addEventListener('click', () => {
     let html = '';
     cardList.map((e) => (html += makeCardHtml(e)));
     drawHtml($cardBox, html);
+  }
+});
+
+document.addEventListener('click', function (e) {
+  if (e.target && Object.keys(e.target.dataset).includes('buyButton')) {
+    let itemId = e.target.closest('[data-item]').dataset.itemId;
+    localStorage_cart.indexOf(itemId) < 0
+      ? localStorage_cart.push(itemId)
+      : null;
+
+    localStorage.setItem('cart', JSON.stringify(localStorage_cart)); //자료저장하는법
+    console.log(JSON.parse(localStorage.getItem('cart')));
   }
 });
