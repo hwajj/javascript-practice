@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.min.js"
+      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="apple.css" />
+  </head>
+
+  <body>
+    <div class="card-background">
+      <div class="card-box">
+        <img src="./assets/card1.png" />
+      </div>
+      <div class="card-box">
+        <img src="./assets/card2.png" />
+      </div>
+      <div class="card-box">
+        <img src="./assets/card3.png" />
+      </div>
+    </div>
+  </body>
+  <script>
+    $(window).scroll(function () {
+      var height = $(window).scrollTop();
+      //  console.log(height);
+      //622 ~ 1163 으로 바뀔때 opacity 는 1에서 0으로
+      var y = (-1 / 500) * height + 115 / 50;
+      $('.card-box').eq(0).css('opacity', y);
+
+      //height 781~ 1121에서 스케일을 1에서 0.8로
+      var scale_0 = -0.000588235 * height + 1.45941;
+      if (height > 781 && height < 1121) {
+        $('.card-box').eq(0).css('transform', `scale(${scale_0})`);
+      }
+
+      //1500~ 1900
+      var z = -(4.28 / 1900) * height + 4.28;
+      $('.card-box').eq(1).css('opacity', z);
+
+      //height 1600 ~ 1994 사이에서 스케일을 1에서 0.8로
+      var scale_1 = -0.000666667 * height + 2.06667;
+      if (height > 1600) {
+        $('.card-box').eq(1).css('transform', `scale(${scale_1})`);
+      }
+      //
+    });
+  </script>
+</html>
+a == && b ==
