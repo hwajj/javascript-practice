@@ -18,6 +18,7 @@ function processRequest(response) {
 
 // makeRequest('Google')
 //   .then((response) => {
+//     setTimeout(() => {}, 3000);
 //     console.log('Response Received');
 //     return processRequest(response);
 //   })
@@ -28,7 +29,7 @@ function processRequest(response) {
 // 해당 명령 실행될때까지는 기다림
 async function doWork() {
   try {
-    const response = await makeRequest('Google');
+    const response = await makeRequest('facebook');
     console.log('Response Received');
     const processResponse = await processRequest(response);
     console.log(processResponse);
