@@ -1,0 +1,52 @@
+body {
+  background: rgb(44, 123, 160);
+}
+
+.shopping-list {
+  width: 400px;
+  background: white;
+  border-radius: 5px;
+  margin: 0 auto;
+  padding: 10px;
+  line-height: 18px;
+  height: 50px;
+}
+
+.shopping {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+}
+
+.shopping button {
+  width: 100px;
+  color: white;
+  background-color: rgb(255, 0, 230);
+  border: 1px solid rgb(194, 194, 194);
+  padding: 2px;
+}
+
+.shopping input {
+  padding: 3px;
+  border: 1px solid rgb(194, 194, 194);
+  width: 200px;
+  height: 12px;
+}
+
+.list {
+  margin-top: 30px;
+}
+
+.list li {
+  margin: 4px;
+  list-style: none;
+}
+
+.shopping-list span {
+  display: inline-block;
+  width: 70%;
+  background-color: rgb(244, 255, 217);
+  padding: 2px;
+}
