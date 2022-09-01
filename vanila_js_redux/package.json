@@ -1,0 +1,12 @@
+{
+  "name": "vanila_js_redux",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "@reduxjs/toolkit": "^1.8.5",
+    "react": "^16.9.0 || ^17.0.0 || ^18",
+    "react-redux": "^7.2.1 || ^8.0.2",
+    "redux": "^4.2.0"
+  }
+}
